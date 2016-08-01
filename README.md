@@ -49,4 +49,4 @@ The highly integrated nature, with a large selection of modern hardware and feat
 18. Compatible with Major Arduino Boards( new devices being added every week)
 
 
-*The shield provides space and connections for an add-on module, which is to be purchased separately.
+#####*The shield provides space and connections for an add-on module, which is to be purchased separately.
