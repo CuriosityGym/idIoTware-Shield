@@ -4,7 +4,7 @@
 The IdIoTWare Shield is an easy to use learning platform for Arduino.
 It provides an extremely flexible environment to express ideas and bring interactivity to the simplest of Arduino projects, and provides a massive room for learning and growth for advanced projects and applications.
 
-The highly integrated nature, small footprint, with a large selection of modern hardware and features, accompanied by tested libraries, code and use cases, make it a must-have in the hands of the enthusiastic Arduino learner.
+The highly integrated nature, with a large selection of modern hardware and features in a small footprint, accompanied by tested libraries, code and use cases, make it a must-have in the hands of the enthusiastic Arduino learner.
 
 ##Product Images
 <img src="https://github.com/CuriosityGym/IdIoTware-Shield/blob/master/images/1-White.png" width="600"></img>
