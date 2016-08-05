@@ -1,10 +1,12 @@
 # IdIoTware-Shield
 ##IoT with Arduino, Simplified
 
-The IdIoTWare Shield is an easy to use learning platform for Arduino.
-It provides an extremely flexible environment to express ideas and bring interactivity to the simplest of Arduino projects, and provides a massive room for learning and growth for advanced projects and applications.
+The idIoTware (pronounced “eye-dee-eye-oh-tee-ware”) Shield is a learning platform that offers both novices and advanced Arduino users, the opportunity to bring hundreds of projects alive quickly.
 
-The highly integrated nature, with a large selection of modern hardware and features in a small footprint, accompanied by tested libraries, code and use cases, make it a must-have in the hands of the enthusiastic Arduino learner.
+idIoTware provides an extremely flexible environment to express ideas and bring interactivity to simple projects, as well as providing for an easy way to implement, learn and prototype advanced projects and applications.
+
+
+It is the “first of its kind” shield that offers this large variety of wireless communication options, input sensors, outputs and device extensibility. While offering high integration and compactness, the idIoTware Shield offers a large selection of latest hardware and features, accompanied by tested libraries, code and use cases. A must-have for the enthusiastic Arduino user.
 
 ##Product Images
 <img src="https://github.com/CuriosityGym/IdIoTware-Shield/blob/master/images/1-White.png" width="600"></img>
@@ -12,41 +14,36 @@ The highly integrated nature, with a large selection of modern hardware and feat
 <img src="https://github.com/CuriosityGym/IdIoTware-Shield/blob/master/images/2-White.png" width="600"></img>
 
 ##Hardware Specifications
-1. Arduino Digital I/O’s connected to LED’s, enabling very quick debugging and error corrections.
+#####Inputs
 
-2. Integrated Temperature Sensor for measuring ambient temperature.
+Integrated Temperature Sensor for measuring ambient temperature.
+Integrated Light sensor that can measure relative light intensity.
+Integrated Potentiometer to allow and simplify setting levels of intensity and thresholds.
+Touch Pad and Input Switch to enable user inputs.
+38Khz Infrared Receiver which allows wireless remotes to control physical devices like robots.
 
-3. Integrated Light sensor that can measure relative light intensity
+#####Outputs
 
-4. Integrated Potentiometer to allow and simplify setting levels of intensity and thresholds. 
+WS2812B Smart RGB LED for Colored Light Mixing.
+I2C OLED Display for Visual Data Representation *
+Multi tone Piezo buzzer for audio experiments.
+Arduino Digital I/O’s connected to LED’s, enabling very quick debugging and error corrections.
 
-5. Touch Pad and Input Switch to enable user inputs.
+#####Connectivity
 
-6. WS2812B Smart RGB LED for Colored Light Mixing.
+ESP8226-01 Module to allow seamless Internet and Cloud Connectivity *
+Connections and hardware that allows Arduino to be programmed over WiFi.
+NRF24L01+ Module which allows for Mesh Networking and Collaborative Decision Making. *
+Bluetooth and BLE Modules for connectivity to smartphones *
 
-7. 38Khz Infrared Receiver which allows wireless remotes to control physical devices like robots.
+#####Extensibility/Advanced features
 
-8. Multi tone Piezo buzzer for audio experiments.
-
-9. Micro SD Card Socket for data accumulation and storage.*
-
-10. ESP8226-01 Module to allow seamless Internet and Cloud Connectivity *
-
-11. NRF24L01+ Module  which allows for Mesh Networking and Collaborative Decision Making *
-
-12. Bluetooth and BLE Modules For connectivity to smartphones *
-
-13. I2C OLED Display for Visual Data Representation *
-
-14. Expansion ports for Digital and Analog pins of Arduino.
-
-15. Additional Voltage Regulator and onboard power conditioning hardware for 3.3 V devices.
-
-16. Selection Hardware (Jumpers) for enable/disable features (User Selectable)
-
-17. Connections and hardware that allows Arduino to be programmed over Wifi.
-
-18. Compatible with Major Arduino Boards( new devices being added every week)
+Expansion ports for Digital and Analog pins of Arduino.
+Micro SD Card Socket for data accumulation and storage.*
+Additional Voltage Regulator and onboard power conditioning hardware for 3.3 V devices.
+Selection Hardware (Jumpers) for enable/disable features (User Selectable).
+Compatible with Major Arduino Boards( new devices being added every week).
 
 
-#####*The shield provides space and connections for an add-on module, which is to be purchased separately.
+
+#####* Modules and SD Card to be purchased separately
