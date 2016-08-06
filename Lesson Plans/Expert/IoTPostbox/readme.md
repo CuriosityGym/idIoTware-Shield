@@ -8,7 +8,7 @@ In this example we are using
 
 2) An idIoTWare Shield
 
-3) A Arduino Uno Board.
+3) An Arduino Uno Board.
 
 
 The Light Sensor/Light Dependent Resistor(LDR) on IdIoTWare shield is used as sensor to detect the fall of the letter in a letterbox.
