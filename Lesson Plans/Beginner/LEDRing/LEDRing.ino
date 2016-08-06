@@ -7,7 +7,7 @@
 const byte led_Pin_Count = 12; // // the number of leds
 int potentiometerPin = A2;   // The Blue Potentiometer is connected to Analog pin 2
 int minSpeed = 500; // The maximimum value of time in milliseconds to be set between two adjacent led's glowing.
-int maxSpeed = 50;  // The minimum value of time in milliseconds to be set between two adjacent led's glowing.
+int maxSpeed = 10;  // The minimum value of time in milliseconds to be set between two adjacent led's glowing.
 
 void setup()
 {
@@ -38,5 +38,5 @@ void loop()
 int potentiometerValue()
 {
   int val = analogRead(potentiometerPin); //Read the analog position of the potentiometer
-  return val; return it
+  return val; //return it
 } 
