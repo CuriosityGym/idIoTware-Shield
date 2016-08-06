@@ -19,11 +19,13 @@ We are sending requests for location, current temprature, humnidity and
 weather description. 
 This code allows you to detect your location
 1)Automatically by IP address 
-2)To get weather conditions of particular city just change  the cityID in the following code and change autoDetectLocation variable to false. 
+2)To get weather conditions of particular city just change  the cityID in the following code and change autoDetectLocation
+variable to false. 
 
-OLED is used to display this information.
+an I2C OLED is used to display this information.
 
-We are sending request after every one hour to get weather information.To change this interval, change value of variable refreshRate. 
+We are sending a request after every one hour to get weather information.
+To change this interval, change value of variable refreshRate. 
                
 */
 
