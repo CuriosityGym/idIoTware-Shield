@@ -16,33 +16,33 @@ It is the “first of its kind” shield that offers this large variety of wirel
 ##Hardware Specifications
 #####Inputs
 
-Integrated Temperature Sensor for measuring ambient temperature.
-Integrated Light sensor that can measure relative light intensity.
-Integrated Potentiometer to allow and simplify setting levels of intensity and thresholds.
-Touch Pad and Input Switch to enable user inputs.
-38Khz Infrared Receiver which allows wireless remotes to control physical devices like robots.
+1. Integrated Temperature Sensor for measuring ambient temperature.
+2. Integrated Light sensor that can measure relative light intensity.
+3. Integrated Potentiometer to allow and simplify setting levels of intensity and thresholds.
+4. Touch Pad and Input Switch to enable user inputs.
+5. 38Khz Infrared Receiver which allows wireless remotes to control physical devices like robots.
 
 #####Outputs
 
-WS2812B Smart RGB LED for Colored Light Mixing.
-I2C OLED Display for Visual Data Representation *
-Multi tone Piezo buzzer for audio experiments.
-Arduino Digital I/O’s connected to LED’s, enabling very quick debugging and error corrections.
+1. WS2812B Smart RGB LED for Colored Light Mixing.
+2. I2C OLED Display for Visual Data Representation *
+3. Multi tone Piezo buzzer for audio experiments.
+4. Arduino Digital I/O’s connected to LED’s, enabling very quick debugging and error corrections.
 
 #####Connectivity
 
-ESP8226-01 Module to allow seamless Internet and Cloud Connectivity *
-Connections and hardware that allows Arduino to be programmed over WiFi.
-NRF24L01+ Module which allows for Mesh Networking and Collaborative Decision Making. *
-Bluetooth and BLE Modules for connectivity to smartphones *
+1. ESP8226-01 Module to allow seamless Internet and Cloud Connectivity *
+2. Connections and hardware that allows Arduino to be programmed over WiFi.
+3. NRF24L01+ Module which allows for Mesh Networking and Collaborative Decision Making. *
+4. Bluetooth and BLE Modules for connectivity to smartphones *
 
 #####Extensibility/Advanced features
 
-Expansion ports for Digital and Analog pins of Arduino.
-Micro SD Card Socket for data accumulation and storage.*
-Additional Voltage Regulator and onboard power conditioning hardware for 3.3 V devices.
-Selection Hardware (Jumpers) for enable/disable features (User Selectable).
-Compatible with Major Arduino Boards( new devices being added every week).
+1. Expansion ports for Digital and Analog pins of Arduino.
+2. Micro SD Card Socket for data accumulation and storage.*
+3. Additional Voltage Regulator and onboard power conditioning hardware for 3.3 V devices.
+4. Selection Hardware (Jumpers) for enable/disable features (User Selectable).
+5. Compatible with Major Arduino Boards( new devices being added every week).
 
 
 
