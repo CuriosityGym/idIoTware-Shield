@@ -2,13 +2,17 @@
 idIoTWare Shield Weather Gadget
 **Attention: Please install all libraries from our Github Repository to enable the example to run.**
 
-In this example we are using ESP8266 wifi module and OLED display
-to display weather conditinos of particular city from WeatherDataApi.
-          
-WeatherDataApi: Heroku Deployment Application that reduces data downloaded for OpenWeatherMap Api
+In this example we are using ESP8266-01 Wifi Module with esp-link firmware and an I2C OLED display
+to show weather conditinos of particular city, fetched from OpenWeatherMaps http://www.openweathermap.org/appid
 
-To get data from OpenWeatherMap Api, you need to create openweathermap 
-account and then generate API key and use that API Key in this code. You can read on how to do it here http://www.openweathermap.org/appid                
+WeatherDataApi: Heroku Deployment Application that reduces data downloaded for OpenWeatherMap Api
+Due to memory limits on the Arduino, an intermediate server filters data recieved from OpenWeatherMaps.
+The python code can be accessed here https://github.com/CuriosityGym/WeatherDataApi
+
+
+
+To get data from OpenWeatherMap Api, you need to create openweathermaps account and then generate API key, and use that API Key in this code.
+You can read on how to do it here http://www.openweathermap.org/appid                
 
 In this example we have used ELClient.h library to get data from WeatherDataApi. 
 We are sending requests for location, current temprature, humnidity and 
