@@ -15,7 +15,7 @@ To get data from OpenWeatherMap Api, you need to create openweathermaps account 
 You can read on how to do it here http://www.openweathermap.org/appid                
 
 In this example we have used ELClient.h library to get data from WeatherDataApi. 
-We are sending requests for location, current temprature, humidity and weather description. 
+We are sending requests for location, current temperature, humidity and weather description. 
 This code allows you to detect your location
 1) Automatically by IP address (default behaviour)
 2) To get weather conditions of particular city, change the variable cityID in the following code and change autoDetectLocation variable to false. cityID can be searched on openweathermaps
