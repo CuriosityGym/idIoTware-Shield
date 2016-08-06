@@ -14,7 +14,7 @@ In this example we are using
 The Light Sensor/Light Dependent Resistor(LDR) on IdIoTWare shield is used as sensor to detect the fall of the letter in a letterbox.
 The RGB WS2812 Led (addressable RGB LED) on idIoTWare shield is On (WHITE Color) and reflects light on LDR.
 
-As soon as new letter dropped in postbox light incident on LDR changes due to reflection and an IFTTT event gets triggered.
+As soon as new letter is dropped in postbox light incident on LDR changes due to reflection and an IFTTT event gets triggered.
 Here we are using IFTTT Recipe that triggers the Maker Channel to send an email. 
 
 #####What is IFTTT? 
