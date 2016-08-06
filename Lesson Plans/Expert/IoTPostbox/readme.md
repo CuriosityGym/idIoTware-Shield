@@ -17,7 +17,8 @@ The RGB WS2812 Led (addressable RGB LED) on idIoTWare shield is On (WHITE Color)
 As soon as new letter dropped in postbox light incident on LDR changes due to reflection and an IFTTT event gets triggered.
 Here we are using IFTTT Recipe that triggers the Maker Channel to send an email. 
 
-What is IFTTT? 
+#####What is IFTTT? 
+
 IFTTT is an abbreviation of "If This Then That"
 
 IFTTT is a free web-based service that allows users to create chains of simple conditional statements,
