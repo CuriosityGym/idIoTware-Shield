@@ -1,11 +1,12 @@
 #idIoTware Shield LED Ring Demo
 
-This Arduino Sketch can control the speed of the LED's 1 to 12 by using the potentiometer on the Shield.
-Turning the potentiometer will make the LED's blink faster and slower
-The variables minSpeed and maxSpeed are values in milliseconds.
+This Arduino program demonstrates the ring of LED's on the shield to light up one after the other.
+
+Learners can change the variable blinkSpeed to see how a large value or a small value affects the timing of the lights going one and off, one after the other.
 
 [![LED Ring Demo](http://img.youtube.com/vi/NEE72VXsWSE/0.jpg)](https://www.youtube.com/watch?v=NEE72VXsWSE)
 
 #Hardware Required
-1. idIoTware Shield and an Arduino Uno.
-2. A small screwdriver to turn the potentiometer.
+1. idIoTware Shield
+2. Arduino Uno.
+
