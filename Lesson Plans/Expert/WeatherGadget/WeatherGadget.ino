@@ -145,55 +145,57 @@ void setup()
     }
 
 void loop() 
-    { 
-      get_location();
-      get_Temperature();
-      get_Humidity();
-      get_weatherDescription();
-      for (int i=0; i<= (refreshRate*60)/10; i++)
-          {
-            frameScroll();
-          }
-    }      
+{ 
+  if(wifiConnected) 
+  {
+    get_location();
+    get_Temperature();
+    get_Humidity();
+    get_weatherDescription();
+    for (int i=0; i<= (refreshRate*60)/10; i++)
+    {
+      frameScroll();
+    }
+  }
+}      
  
 // function to get humidity from 
 void get_location()
-    { 
-      if(autoDetectLocation)
-        {
-           sprintf(buff, "/getCityCountryByIP");
-           // process any callbacks coming from esp_link
-           esp.Process();
-        }
-      else
-        {
-           sprintf(buff, "/getCityCountry?id=%s&appid=%s",CityID.c_str(),API_KEY.c_str());
-           // process any callbacks coming from esp_link
-           esp.Process();
-         }  
-     
-      // if we're connected make an HTTP request
-      if(wifiConnected) 
-        {
-          // Request /utc/now from the previously set-up server
-          rest.get((const char*)buff);
+{ 
+  if(autoDetectLocation)
+    {
+       sprintf(buff, "/getCityCountryByIP");
+       // process any callbacks coming from esp_link
+       //esp.Process();
+    }
+  else
+    {
+       sprintf(buff, "/getCityCountry?id=%s&appid=%s",CityID.c_str(),API_KEY.c_str());
+       // process any callbacks coming from esp_link
+      // esp.Process();
+     }  
+      esp.Process();
+  // if we're connected make an HTTP request
+  
+      // Request location from the previously set-up server
+      rest.get((const char*)buff);
 
-          char response[20]="";
-          uint16_t code = rest.waitResponse(response, 20);
-          if(code == HTTP_STATUS_OK)     //check for response for HTTP request  
-            {
-             Serial.println("ARDUINO: GET successful:");
-             location = response;  
-            } 
-          else 
-            {
-             Serial.print("ARDUINO: GET failed: ");
-             Serial.println(code);
-            }
-          delay(1000);
+      char response[20]="";
+      uint16_t code = rest.waitResponse(response, 20);
+      if(code == HTTP_STATUS_OK)     //check for response for HTTP request  
+        {
+         Serial.println("ARDUINO: GET successful:");
+         location = response;  
+        } 
+      else 
+        {
+         Serial.print("ARDUINO: GET failed: ");
+         Serial.println(code);
         }
-        
-    }   
+      delay(1000);
+    
+    
+}   
     
 void get_Temperature()
     { 
@@ -201,37 +203,36 @@ void get_Temperature()
         {
            sprintf(buff, "/temperature?appid=%s",API_KEY.c_str());
            // process any callbacks coming from esp_link
-           esp.Process();
+           //esp.Process();
         }
       else
         {
            sprintf(buff, "/temperature?id=%s&appid=%s",CityID.c_str(),API_KEY.c_str());
            // process any callbacks coming from esp_link
-           esp.Process();
+          // esp.Process();
          }  
-     
+          esp.Process();
       // if we're connected make an HTTP request
-      if(wifiConnected) 
-        {
-          // Request /utc/now from the previously set-up server
+     
+          // Request Temperature from the previously set-up server
           rest.get((const char*)buff);
 
           char response[]="";
           uint16_t code = rest.waitResponse(response, 3);
           if(code == HTTP_STATUS_OK)     //check for response for HTTP request  
             {
-             Serial.println("ARDUINO: GET successful:");
-             temperature = atoi(response);    //convert recieved string to integer
-             tempInCelsius = (temperature - 273.15); // temperature values recieved from WeatherDataApi
-                                                     // are in Kelvin convert it to Celcius
+               Serial.println("ARDUINO: GET successful:");
+               temperature = atoi(response);    //convert recieved string to integer
+               tempInCelsius = (temperature - 273.15); // temperature values recieved from WeatherDataApi
+                                                       // are in Kelvin convert it to Celcius
             } 
           else 
             {
-             Serial.print("ARDUINO: GET failed: ");
-             Serial.println(code);
+               Serial.print("ARDUINO: GET failed: ");
+               Serial.println(code);
             }
           delay(1000);
-        }
+       
         
     }   
     
@@ -242,19 +243,18 @@ void get_Humidity()
         {
            sprintf(buff, "/humidity?appid=%s",API_KEY.c_str());
            // process any callbacks coming from esp_link
-           esp.Process();
+           //esp.Process();
         }
       else
         {
            sprintf(buff, "/humidity?id=%s&appid=%s",CityID.c_str(),API_KEY.c_str());
            // process any callbacks coming from esp_link
-           esp.Process();
+           
          }  
-     
+          esp.Process();
       // if we're connected make an HTTP request
-      if(wifiConnected) 
-        {
-          // Request /utc/now from the previously set-up server
+     
+          // Request Humidity from the previously set-up server
           rest.get((const char*)buff);
 
           char response[]="";
@@ -266,7 +266,8 @@ void get_Humidity()
              Serial.println(response);
              int hum = atoi(response);  // convert recieved string to integer
              if (hum > 100)
-                { hum = hum/10;
+                { 
+                  hum = hum/10;
                   humidity = hum;
                 } 
              else 
@@ -280,7 +281,7 @@ void get_Humidity()
              Serial.println(code);
             }
           delay(1000);
-        }
+        
         
     }   
          
@@ -290,35 +291,35 @@ void get_weatherDescription()
         {
            sprintf(buff, "/weatherDescription?appid=%s",API_KEY.c_str());
            // process any callbacks coming from esp_link
-           esp.Process();
+           
         }
       else
         {
            sprintf(buff, "/weatherDescription?id=%s&appid=%s",CityID.c_str(),API_KEY.c_str());
            // process any callbacks coming from esp_link
-           esp.Process();
+          
          }
+         esp.Process();
      
       // if we're connected make an HTTP request
-      if(wifiConnected) 
-        {
-          // Request /utc/now from the previously set-up server
+      
+          // Request Weather Description from the previously set-up server
           rest.get((const char*)buff);
 
           char response[20]="";
           uint16_t code = rest.waitResponse(response, 20);
           if(code == HTTP_STATUS_OK)     //check for response for HTTP request  
             {
-             Serial.println("ARDUINO: GET successful:");
-             weatherDescription = response;
+              Serial.println("ARDUINO: GET successful:");
+              weatherDescription = response;
             } 
           else 
             {
-             Serial.print("ARDUINO: GET failed: ");
-             Serial.println(code);
+              Serial.print("ARDUINO: GET failed: ");
+               Serial.println(code);
             }
           delay(1000);
-        }
+        
         
     }  
    
@@ -369,15 +370,15 @@ void displayIcon()
     } 
 
 //print weather icon and weather description on OLED
-void drawFrame1(const uint8_t *bitmap) 
-    { 
-       u8g.setPrintPos( yPos + xPos, 11);
-       u8g.print(location);
-       u8g.drawXBMP( yPos + xPos + 40, 12, icon_width, icon_height, bitmap);
-       u8g.setPrintPos( yPos + xPos + 10, 61);
-       u8g.print(weatherDescription);
-     
-    }
+  void drawFrame1(const uint8_t *bitmap) 
+  { 
+     u8g.setPrintPos( yPos + xPos, 11);
+     u8g.print(location);
+     u8g.drawXBMP( yPos + xPos + 40, 12, icon_width, icon_height, bitmap);
+     u8g.setPrintPos( yPos + xPos + 10, 61);
+     u8g.print(weatherDescription);
+   
+  }
 //print thermometer icon and tmeperature and humidity values on OLED
 void drawFrame2() 
     { 
