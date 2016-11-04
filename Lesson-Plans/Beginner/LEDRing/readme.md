@@ -2,7 +2,12 @@
 
 This Arduino program demonstrates the ring of LED's on the shield to light up one after the other.
 
-[![LED Ring Demo](http://img.youtube.com/vi/NEE72VXsWSE/0.jpg)](https://www.youtube.com/watch?v=NEE72VXsWSE)
+###Hackster Project
+https://www.hackster.io/30115/led-ring-patterns-7f5cd2?ref=channel&ref_id=29476_trending___&offset=1
+
+###Video
+
+https://www.youtube.com/watch?v=BFscHxyjzhA
 
 #Hardware Required
 1. idIoTware Shield
