@@ -2,8 +2,6 @@
 -------------
 
 
-----------
-
 
 This is a device that could be used to notify any specific content on google calendar with idIoTware Shield.
 
@@ -18,7 +16,6 @@ So what is IFTTT?
 -----------------
 
 
-----------
 
 
 IFTTT is a free web-based service that allows users to create chains of simple conditional statements, called "recipes", which are triggered based on changes to other web services such as Gmail, Facebook, Instagram, Twitter and many more.
@@ -36,7 +33,7 @@ Configuring IFTTT and Blynk APP
 -------------------------------
 
 
-----------
+
 
 
 1. Go to www.ifttt.com
@@ -48,8 +45,7 @@ Configuring IFTTT and Blynk APP
 4. Select Google Calendar.
 
 
-5. For this example we choose event from search starts.
-NOTE:You can choose any of the three,
+5. For this example we choose event from search starts. NOTE:You can choose any of the three.
 
 6. Write the keyword you want to trigger from Google Calendar.
 
@@ -63,6 +59,8 @@ NOTE:You can choose any of the three,
 
 In your Arduino program, you need to copy the Token key generated in the blynk app and also need to write your ssid and password for wifi . You are now ready to upload the code. You will see your ON Air light up when the google calendar event is called.
 
-1.Configuring Arduino IDE and idIoTware shield
-2.Connect One jumper to CHPD for enabling esp8266
+1. Configuring Arduino IDE and idIoTware shield
+
+2. Connect One jumper to CHPD for enabling esp8266
+
 3. Connect One jumper to CLR means color that is RGB LED and D6. 
