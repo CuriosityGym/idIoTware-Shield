@@ -1,39 +1,26 @@
 /*
-    IoT PostBox
-    
-    **Attention: Please install all libraries from our Github Repository to enable the example to run.**
-    
-    In this example we are using
-    1) An ESP8266-01 Module with ESP-Link Firmware
-    2) An idIoTWare Shield
-    3) A Arduino Uno Board.
-    
-    The Light Sensor/Light Dependent Resistor(LDR) on IdIoTWare shield is used as sensor to detect the fall of the letter in a letterbox.
-    The RGB WS2812 Led (addressable RGB LED) on idIoTWare shield is On (WHITE Color) and reflects light on LDR.
-    As soon as new letter dropped in postbox light incident on LDR changes due to reflection and an IFTTT event gets triggered.
-    Here we are using IFTTT Recipe that triggers the Maker Channel to send an email. 
+idIoTWare Shield Location Display Gadget
 
-    What is IFTTT? 
-    IFTTT is a free web-based service that allows users to create chains of simple conditional statements,
-    called "recipes", which are triggered based on changes to other web services such as Gmail, Facebook,
-    Instagram, and many more.IFTTT is an abbreviation of "If This Then That"
-    Create account on IFTTT and create your recipe in www.ifttt.com
+Attention: Please install all libraries from our Github Repository to enable this example to run.
 
-    A publicly accessible recipe is available at this URL.
-    
-   
-      
+In this example we are using ESP8266-01 Wifi Module with esp-link firmware and an I2C OLED display to show your current location by IP address.
+
+WeatherDataApi: Heroku Deployment Application that reduces data downloaded for ip-api.com. Due to memory limits on the Arduino,
+an intermediate server filters data recieved from ip-api.com. The python code can be accessed here https://github.com/CuriosityGym/WeatherDataApi
+
+An i2c OLED is used to display this information.
+
+The request to GET location is sent every time the Arduino is reset or restarted, only once.    
 */
 
-#include <Adafruit_NeoPixel.h>
-#include <CGShield.h>
-#include <Wire.h>         // Require for I2C communication
-CGShield fs;             // Instanciate CGShield instance
 
+
+#include "U8glib.h"
 #include <ELClient.h>
 #include <ELClientRest.h>
-char buff[128];
-
+char buff[32];
+String location = "";
+U8GLIB_SSD1306_128X64 u8g(U8G_I2C_OPT_NONE|U8G_I2C_OPT_DEV_0);
 // Initialize a connection to esp-link using the normal hardware serial port both for
 // SLIP and for debug messages.
 ELClient esp(&Serial, &Serial);
@@ -70,9 +57,9 @@ void wifiCb(void *response)
 void setup() 
     {
       Serial.begin(9600);   // the baud rate here needs to match the esp-link config
-      color(255,255,255);   // set white color 
       Serial.println("EL-Client starting!");
-
+      u8g.setFont(u8g_font_timB14);
+      u8g.setColorIndex(1);
       // Sync-up with esp-link, this is required at the start of any sketch and initializes the
       // callbacks to the wifi status change callback. The callback gets called with the initial
       // status right after Sync() below completes.
@@ -95,9 +82,9 @@ void setup()
           Serial.println(packet->value);
         }
 
-      // Set up the REST client to talk to www.maker.ifttt.com, this doesn't connect to that server,
+      // Set up the REST client to talk to idiotware.herokuapp.com, this doesn't connect to that server,
       // it just sets-up stuff on the esp-link side
-      int err = rest.begin("maker.ifttt.com");
+      int err = rest.begin("idiotware.herokuapp.com");
       if(err != 0) 
         {
           Serial.print("REST begin failed: ");
@@ -105,58 +92,57 @@ void setup()
           while(1) ;
         }
       Serial.println("EL-REST ready");
+     
       
     }
 
-  void loop() 
-  {
-    new_letter();
-  }
- 
-// this function detects the new letter
-int new_letter()
-   { 
-    
-      int light_value = analogRead(A3); delay(10);
-      int light_value1 = analogRead(A3);delay(10);  
-      Serial.println(light_value1);
-      if(light_value1 >= 510)    //if there is change in light value (New Letter)
-        { 
-          sprintf(buff, "/trigger/new_letter/with/key/XXXXXXXXXXXXXXXXXX");//replace with your Maker channel's API Key
-          logToMaker();  //Log to Maker using commands under void LogToMaker()
-          // print to the serial port too:              
-          Serial.print("New Letter!!");
-                   
-        }
-        delay(50);   
-   } 
- 
-//function to send POST request to Maker channel    
-void logToMaker()
+void loop() 
     {
+     get_Location();
+    }
+ 
+    
+void get_Location()
+    { 
+      sprintf(buff, "/getCityCountryByIP");
            // process any callbacks coming from esp_link
       esp.Process();
 
      
       // if we're connected make an HTTP request
       if(wifiConnected) 
-        {  Serial.println("wifi connected!!");
-          // Request  from the previously set-up server
+        {
+          // Request /utc/now from the previously set-up server
           rest.get((const char*)buff);
 
-          char response[266];
-          uint16_t code = rest.waitResponse(response, 266);
+          char response[20];
+          uint16_t code = rest.waitResponse(response, 20);
           if(code == HTTP_STATUS_OK)     //check for response for HTTP request  
             {
-             Serial.println("ARDUINO: GET successful:");
-             Serial.println(response);
+              Serial.println("ARDUINO: GET successful:");
+              location = response;
+              int commaPositon = location.indexOf(',');
+              String city= "";
+              city=location.substring(0, commaPositon);  //copy city from recived location to variable city
+              String countryCode = "";
+              countryCode=location.substring(commaPositon+2);//copy country code from recived location to variable countryCode
+              u8g.firstPage();
+              do {  
+                   u8g.setPrintPos(15, 30);
+                   u8g.print(city);
+                   u8g.setPrintPos(15, 30);
+                   u8g.print(countryCode);
+                 } while( u8g.nextPage() );
             } 
           else 
             {
-             Serial.print("ARDUINO: GET failed: ");
-             Serial.println(code);
+              Serial.print("ARDUINO: GET failed: ");
+              Serial.println(code);
             }
-          
+          delay(5000);
         }
         
     }   
+    
+   
+   
