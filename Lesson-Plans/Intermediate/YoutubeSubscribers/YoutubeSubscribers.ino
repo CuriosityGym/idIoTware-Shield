@@ -1,16 +1,8 @@
 /*
-idIoTWare Shield Location Display Gadget
-
-Attention: Please install all libraries from our Github Repository to enable this example to run.
-
-In this example we are using ESP8266-01 Wifi Module with esp-link firmware and an I2C OLED display to show your current location by IP address.
-
-WeatherDataApi: Heroku Deployment Application that reduces data downloaded for ip-api.com. Due to memory limits on the Arduino,
-an intermediate server filters data recieved from ip-api.com. The python code can be accessed here https://github.com/CuriosityGym/WeatherDataApi
-
-An i2c OLED is used to display this information.
-
-The request to GET location is sent every time the Arduino is reset or restarted, only once.    
+              Location Display
+   In this example we are using ESP8266 wifi module and OLED display
+ to display location using your IP address.
+                         
 */
 
 
@@ -19,7 +11,10 @@ The request to GET location is sent every time the Arduino is reset or restarted
 #include <ELClient.h>
 #include <ELClientRest.h>
 char buff[32];
-String location = "";
+char buff2[32];
+String subscribers = "";
+String channelName = "";
+ String channel_Name = "";
 U8GLIB_SSD1306_128X64 u8g(U8G_I2C_OPT_NONE|U8G_I2C_OPT_DEV_0);
 // Initialize a connection to esp-link using the normal hardware serial port both for
 // SLIP and for debug messages.
@@ -27,7 +22,6 @@ ELClient esp(&Serial, &Serial);
 
 // Initialize a REST client on the connection to esp-link
 ELClientRest rest(&esp);
-
 boolean wifiConnected = false;
 
 // Callback made from esp-link to notify of wifi status changes
@@ -46,10 +40,16 @@ void wifiCb(void *response)
                wifiConnected = true;
              } 
            else 
-             {
+             { 
+                u8g.firstPage();
+              do { u8g.setFont(u8g_font_timB10); 
+                   u8g.drawStr(1,13,"WIFI DISCONNECTED!!");
+                 } while( u8g.nextPage() );
                Serial.print("WIFI NOT READY: ");//Wifi not connected,check connection
                Serial.println(status);
                wifiConnected = false;
+                
+            
              }
          }
     }
@@ -58,7 +58,7 @@ void setup()
     {
       Serial.begin(9600);   // the baud rate here needs to match the esp-link config
       Serial.println("EL-Client starting!");
-      u8g.setFont(u8g_font_timB14);
+      
       u8g.setColorIndex(1);
       // Sync-up with esp-link, this is required at the start of any sketch and initializes the
       // callbacks to the wifi status change callback. The callback gets called with the initial
@@ -84,7 +84,7 @@ void setup()
 
       // Set up the REST client to talk to idiotware.herokuapp.com, this doesn't connect to that server,
       // it just sets-up stuff on the esp-link side
-      int err = rest.begin("idiotware.herokuapp.com");
+      int err = rest.begin("api.thingspeak.com");
       if(err != 0) 
         {
           Serial.print("REST begin failed: ");
@@ -92,19 +92,23 @@ void setup()
           while(1) ;
         }
       Serial.println("EL-REST ready");
-     
+   
+     get_ChannelName();
+     get_SubscriberCount();
+    
+         
       
     }
 
 void loop() 
     {
-     get_Location();
+   
     }
  
     
-void get_Location()
+void get_ChannelName()
     { 
-      sprintf(buff, "/getCityCountryByIP");
+      sprintf(buff, "/apps/thinghttp/send_request?api_key=IP8NMS42UUM10Z2O");
            // process any callbacks coming from esp_link
       esp.Process();
 
@@ -120,18 +124,69 @@ void get_Location()
           if(code == HTTP_STATUS_OK)     //check for response for HTTP request  
             {
               Serial.println("ARDUINO: GET successful:");
-              location = response;
-              int commaPositon = location.indexOf(',');
-              String city= "";
-              city=location.substring(0, commaPositon);  //copy city from recived location to variable city
-              String countryCode = "";
-              countryCode=location.substring(commaPositon+2);//copy country code from recived location to variable countryCode
+             
+             /// int data = Serial.readBytesUntil('\n',response,32);
+             // response[data] = '\0';
+              Serial.println(response);
+              channelName = response;
+              channel_Name = channelName.substring(0,9);
+              Serial.println(channel_Name);
               u8g.firstPage();
-              do {  
-                   u8g.setPrintPos(15, 30);
-                   u8g.print(city);
-                   u8g.setPrintPos(15, 30);
-                   u8g.print(countryCode);
+              do { u8g.setFont(u8g_font_timB10);
+                   u8g.drawStr(1,10,"Channel Name:");
+                   u8g.setFont(u8g_font_timB14); 
+                   u8g.setPrintPos(5, 30);
+                   u8g.print(channel_Name);
+                 } while( u8g.nextPage() );
+            } 
+          else 
+            {
+              Serial.print("ARDUINO: GET failed: ");
+              Serial.println(code);
+            }
+          //delay(5000);
+        }
+        
+    }   
+    
+void get_SubscriberCount()
+    { 
+      sprintf(buff, "/apps/thinghttp/send_request?api_key=2J2UYWIDFW1SAID2");
+           // process any callbacks coming from esp_link
+      esp.Process();
+
+     
+      // if we're connected make an HTTP request
+      if(wifiConnected) 
+        {
+          // Request /utc/now from the previously set-up server
+          rest.get((const char*)buff);
+
+          char response[20];
+          uint16_t code = rest.waitResponse(response, 20);
+          if(code == HTTP_STATUS_OK)     //check for response for HTTP request  
+            {
+              Serial.println("ARDUINO: GET successful:");
+              subscribers = response;
+              String subscribers_count = subscribers.substring(0,9);
+             // Serial.println(subscribers);
+              //int data = Serial.readBytesUntil('\n',response,32);
+              //response[data] = '\0';
+              //Serial.println(response);
+              //subscribers = response;
+              Serial.println(subscribers_count);
+              u8g.firstPage();
+              do {
+                   u8g.setFont(u8g_font_timB10);
+                   u8g.drawStr(1,10,"Channel Name:");
+                   u8g.setFont(u8g_font_timB14); 
+                   u8g.setPrintPos(5, 30);
+                   u8g.print(channel_Name);
+                   u8g.setFont(u8g_font_timB10);
+                   u8g.drawStr(1,45,"Subscribers:");
+                   u8g.setFont(u8g_font_timB14); 
+                   u8g.setPrintPos(5, 62);
+                   u8g.print(subscribers_count);
                  } while( u8g.nextPage() );
             } 
           else 
@@ -142,7 +197,5 @@ void get_Location()
           delay(5000);
         }
         
-    }   
-    
-   
+    }       
    
