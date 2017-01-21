@@ -13,7 +13,7 @@
 char buff[32];
 char buff2[32];
 String bitcoin_value = "";
-unsigned long time=0;
+unsigned long lastUpdated=millis();
 unsigned long samplingTime = 3600;
 U8GLIB_SSD1306_128X64 u8g(U8G_I2C_OPT_NONE|U8G_I2C_OPT_DEV_0);
 // Initialize a connection to esp-link using the normal hardware serial port both for
@@ -94,7 +94,7 @@ void setup()
         }
       Serial.println("EL-REST ready");
     
-     get_bitcoinValue();
+     //get_bitcoinValue();
    
     
          
@@ -103,13 +103,13 @@ void setup()
 
 void loop() 
     {
-      unsigned long  elapsedTime = millis()/1000;   // this variable will keep track of elapsed time
-      while(((millis()/1000)-elapsedTime) < 1);    // this loop will do nothing until a second has passed 
-      time++;                                       //increment time after each second.
+                                        
+      esp.Process();
       
-      if((time % samplingTime == 0))
+      if((millis()-lastUpdated) > samplingTime)
         { 
           get_bitcoinValue();
+          lastUpdated=millis();
         }  
    
     }
@@ -119,7 +119,7 @@ void get_bitcoinValue()
     { 
       sprintf(buff, "/apps/thinghttp/send_request?api_key=558W30NPHWSXVP3J");
            // process any callbacks coming from esp_link
-      esp.Process();
+      //esp.Process();
 
      
       // if we're connected make an HTTP request
