@@ -35,7 +35,7 @@ To change this interval, change value of variable refreshRate.
 #include <ELClient.h>
 #include <ELClientRest.h>
 #include "icons.h"    // Bitmap weather icons 
-#define autoDetectLocation false
+#define autoDetectLocation true
 #define refreshRate 60   //send request after ever 60 minutes(one hour) 
 U8GLIB_SSD1306_128X64 u8g(U8G_I2C_OPT_NONE|U8G_I2C_OPT_DEV_0);	// I2C / TWI 
 
