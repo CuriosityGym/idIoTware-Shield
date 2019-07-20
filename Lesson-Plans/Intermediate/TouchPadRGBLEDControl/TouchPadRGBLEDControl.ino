@@ -11,15 +11,28 @@
                                // where 0 is dimmest (off) and 255 is maximum brightness (0-255).
                                // for example to set RED color, color(255,0,0);
   
-  In this example, WS2812 Led changes its color as we toch the touchpad.  
+  In this example, WS2812 Led changes its color as we touch the touchpad.  
 
 */
 
 // sets up and initialize CGShield
 #include <Adafruit_NeoPixel.h>
-#include <idIoTwareShield.h>
-#include <Wire.h>         // Require for I2C communication
-idIoTwareShield fs;             // Instanciate CGShield instance
+#define PIN 6
+// Parameter 1 = number of pixels in strip
+// Parameter 2 = Arduino pin number (most are valid)
+// Parameter 3 = pixel type flags, add together as needed:
+//   NEO_KHZ800  800 KHz bitstream (most NeoPixel products w/WS2812 LEDs)
+//   NEO_KHZ400  400 KHz (classic 'v1' (not v2) FLORA pixels, WS2811 drivers)
+//   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
+//   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
+//   NEO_RGBW    Pixels are wired for RGBW bitstream (NeoPixel RGBW products)
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(60, PIN, NEO_GRB + NEO_KHZ800);
+
+// IMPORTANT: To reduce NeoPixel burnout risk, add 1000 uF capacitor across
+// pixel power leads, add 300 - 500 Ohm resistor on first pixel's data input
+// and minimize distance between Arduino and first pixel.  Avoid connecting
+// on a live circuit...if you must, connect GND first.
+
 int buzzerPin = A1;
 const byte touchpadPin= 4;
 int counter;
@@ -29,7 +42,10 @@ void setup()
       Serial.begin(9600);
       pinMode(touchpadPin,INPUT); // declare touchpad as input
       pinMode(buzzerPin,OUTPUT);
-      brightness(150);
+      strip.begin();
+      strip.show(); // Initialize all pixels to 'off'
+
+      strip.setBrightness(150);
     }
   
 void loop()
@@ -42,33 +58,33 @@ void loop()
          Serial.println(counter);
          switch(counter) 
               { 
-                case 1: color(127,0,255);
+                case 1: strip.setPixelColor(0,127,0,255);strip.show();
                 break;
                   
-                case 2: color(0,0,255);
+                case 2: strip.setPixelColor(0,0,0,255);strip.show();
                 break;
                   
-                case 3: color(0,255,0);
+                case 3: strip.setPixelColor(0,0,255,0);strip.show();
                 break;
                   
-                case 4: color(255,255,0);
+                case 4: strip.setPixelColor(0,255,255,0);strip.show();
                 break;
                   
-                case 5: color(255,128,0);
+                case 5: strip.setPixelColor(0,255,128,0);strip.show();
                 break; 
                   
-                case 6: color(255,0,0);
+                case 6: strip.setPixelColor(0,255,0,0);strip.show();
                 break; 
                   
-                case 7: color(255,255,255);
+                case 7: strip.setPixelColor(0,255,255,255);strip.show();
                 break;
                   
-                case 8: color(0,0,0);    
+                case 8: strip.setPixelColor(0,0,0,0);strip.show();    
                 break;    
               } 
        }
       if(counter==8) counter = 0; 
-      
+      delay(100);
     }
 //function to check input from touchpad
 int touchpad()
@@ -87,3 +103,4 @@ void beep(int delayValue)
        delay(delayValue);
        digitalWrite(buzzerPin,LOW);
      }
+
