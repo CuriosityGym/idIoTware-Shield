@@ -11,7 +11,7 @@
                                // where 0 is dimmest (off) and 255 is maximum brightness (0-255).
                                // for example to set RED color, color(255,0,0);
   
-  In this example, WS2812 Led changes its color as we touch the touchpad.  
+  In this example, WS2812 Led changes its color as we toch the touchpad.  
 
 */
 
@@ -45,7 +45,7 @@ void setup()
       strip.begin();
       strip.show(); // Initialize all pixels to 'off'
 
-      strip.setBrightness(150);
+      strip.setBrightness(150);  // set brightness of ws2812 led. put values between(0-255)
     }
   
 void loop()
@@ -58,28 +58,28 @@ void loop()
          Serial.println(counter);
          switch(counter) 
               { 
-                case 1: strip.setPixelColor(0,127,0,255);strip.show();
+                case 1: strip.setPixelColor(0,127,0,255);strip.show();  //set the purple color  strip.setPixelColor(ledNumber, RedValue,GreenValue,BlueValue). As idiotware  
+                                                                  // shield has only one ws2812 rgb led, ledNumber is 0. set RGB values between 0-255 depending upon the color.
+                break;  
+                case 2: strip.setPixelColor(0,0,0,255);strip.show();//blue color
                 break;
                   
-                case 2: strip.setPixelColor(0,0,0,255);strip.show();
+                case 3: strip.setPixelColor(0,0,255,0);strip.show();//green color
                 break;
                   
-                case 3: strip.setPixelColor(0,0,255,0);strip.show();
+                case 4: strip.setPixelColor(0,255,255,0);strip.show();yellow color
                 break;
                   
-                case 4: strip.setPixelColor(0,255,255,0);strip.show();
-                break;
-                  
-                case 5: strip.setPixelColor(0,255,128,0);strip.show();
+                case 5: strip.setPixelColor(0,255,128,0);strip.show();//orange color
                 break; 
                   
-                case 6: strip.setPixelColor(0,255,0,0);strip.show();
+                case 6: strip.setPixelColor(0,255,0,0);strip.show();//red color
                 break; 
                   
-                case 7: strip.setPixelColor(0,255,255,255);strip.show();
+                case 7: strip.setPixelColor(0,255,255,255);strip.show();//white color
                 break;
                   
-                case 8: strip.setPixelColor(0,0,0,0);strip.show();    
+                case 8: strip.setPixelColor(0,0,0,0);strip.show();//turn the led off    
                 break;    
               } 
        }
@@ -103,4 +103,3 @@ void beep(int delayValue)
        delay(delayValue);
        digitalWrite(buzzerPin,LOW);
      }
-
