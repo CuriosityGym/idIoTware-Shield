@@ -1,8 +1,6 @@
 // sets up and initialize CGShield
 #include <Adafruit_NeoPixel.h>
-#include <idIoTwareShield.h>
 #include <Wire.h>         // Require for I2C communication
-CGShield fs;             // Instantiate CGShield instance
 
 #include <SoftwareSerial.h>
 #include "U8glib.h"
@@ -13,11 +11,22 @@ char receivedData[32] = "";
 
 int BuzzerPin = A1;
 
+// Which pin on the Arduino is connected to the NeoPixels?
+// On a Trinket or Gemma we suggest changing this to 1:
+#define LED_PIN    6
+
+// Declare our NeoPixel strip object:
+Adafruit_NeoPixel strip(1, LED_PIN, NEO_GRB + NEO_KHZ800);
+
 void setup() 
 {
     Serial.begin(9600);
     Serial.println("Arduino is ready");
     pinMode(BuzzerPin,OUTPUT);
+    strip.begin();           // INITIALIZE NeoPixel strip object (REQUIRED)
+    strip.show();            // Turn OFF all pixels ASAP
+    strip.setBrightness(50); // Set BRIGHTNESS to about 1/5 (max = 255)
+
     // HC-05 default serial speed for commincation mode is 9600
     BTserial.begin(9600);  
 }
@@ -41,9 +50,7 @@ void loop()
           #else
               buzzer();//Turn on Buzzer and RGB LED
           #endif       
-            
-         
-          
+                  
       }
     }
 
@@ -69,9 +76,12 @@ void buzzer()
       for(byte i=0; i<10; i++)
          {
            color(0,100,0);
+           strip.setPixelColor(1, 0,100,0);         //  Set pixel's color (in RAM)
+           strip.show(); 
            digitalWrite(BuzzerPin, HIGH);   // turn the LED on (HIGH is the voltage level)
            delay(250); 
-           color(0,0,0);               // wait for a second
+           strip.setPixelColor(1, 0,0,0);         //  Set pixel's color (in RAM)
+           strip.show(); 
            digitalWrite(BuzzerPin, LOW);    // turn the LED off by making the voltage LOW
            delay(250);               // wait for a second
         }
