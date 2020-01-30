@@ -75,7 +75,6 @@ void buzzer()
     {
       for(byte i=0; i<10; i++)
          {
-           color(0,100,0);
            strip.setPixelColor(1, 0,100,0);         //  Set pixel's color (in RAM)
            strip.show(); 
            digitalWrite(BuzzerPin, HIGH);   // turn the LED on (HIGH is the voltage level)
